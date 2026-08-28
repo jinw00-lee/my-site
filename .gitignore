@@ -1,0 +1,17 @@
+# Dependencies. Restored with `npm ci` from package-lock.json, which IS tracked.
+node_modules/
+
+# VitePress build output and its incremental build cache. Both are regenerated
+# by `npm run docs:build`, so neither belongs in history.
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Local environment overrides
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# etc
+todd-example.png

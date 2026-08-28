@@ -1,0 +1,135 @@
+/**
+ * Overrides for the default theme.
+ *
+ * Only rules that actually change something belong here. Every variable and
+ * rule this file can override is defined in:
+ * node_modules/vitepress/dist/client/theme-default/styles/
+ * -------------------------------------------------------------------------- */
+
+/**
+ * Colors
+ * -------------------------------------------------------------------------- */
+
+/* Accent colour. `brand-1` is what body links, the nav hover state and the tip
+   container all read from; `2` is the button hover, `3` a solid background, and
+   `soft` the tinted background behind custom blocks. */
+:root {
+  --vp-c-brand-1: #5c6bc0;
+  --vp-c-brand-2: #7986cb;
+  --vp-c-brand-3: #3f51b5;
+  --vp-c-brand-soft: rgba(92, 107, 192, 0.14);
+}
+
+/* Dark mode needs a lighter tint. #5c6bc0 against the dark background reaches
+   only about 3.6:1, short of the 4.5:1 minimum for body text, so the scale is
+   shifted one step lighter the same way the theme's own palette does it. */
+.dark {
+  --vp-c-brand-1: #9fa8da;
+  --vp-c-brand-2: #7986cb;
+  --vp-c-brand-3: #5c6bc0;
+  --vp-c-brand-soft: rgba(92, 107, 192, 0.16);
+}
+
+/**
+ * Component: Doc content
+ * -------------------------------------------------------------------------- */
+
+/* Body copy one step down from the theme's 16px. Headings keep their own sizes,
+   so this only affects prose, lists and tables. The line height is scaled with
+   it to hold the same 1.73 ratio the theme uses. */
+.vp-doc {
+  font-size: 15px;
+}
+
+.vp-doc p {
+  line-height: 26px;
+}
+
+/* The default theme draws a divider rule above every h2. The first line of the
+   home page is an h2 (the site owner's name), so that rule would run across the
+   very top of the page. Put `border-top` and `padding-top` back if section
+   separators are ever wanted. */
+.vp-doc h2 {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* Let the first element of a page start flush with the top of the nav rail.
+   The rendered markdown sits inside a couple of wrapper divs, so the reset has
+   to cover the first child at each of those depths. */
+.vp-doc > :first-child,
+.vp-doc > div > :first-child,
+.vp-doc > div > div > :first-child {
+  margin-top: 0;
+}
+
+/**
+ * Component: Profile header
+ * -------------------------------------------------------------------------- */
+
+.profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.profile-photo {
+  flex: none;
+  width: 200px;
+  height: auto;
+}
+
+/* The name has to sit level with the top of the photo, not below it */
+.profile-body > :first-child {
+  margin-top: 0;
+}
+
+/* The CV link, a divider, and the social icons share one row. Spacing is set
+   per item rather than with a flex gap, because each social link is a 36px box
+   around a 20px icon and so already carries 8px of its own padding. */
+.profile-links {
+  display: flex;
+  align-items: center;
+}
+
+/* Matches the social icons: same resting colour, same hover, same transition */
+.profile-links .cv-link {
+  font-weight: 700;
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+  transition: color 0.5s;
+}
+
+.profile-links .cv-link:hover {
+  color: var(--vp-c-text-1);
+  transition: color 0.25s;
+}
+
+.profile-divider {
+  width: 1px;
+  height: 16px;
+  /* Only on the left: the icon row supplies the matching 6px on the right */
+  margin-left: 6px;
+  background-color: var(--vp-c-divider);
+}
+
+/* Tighten the icon row. Each social link is a fixed-width box centred on a 20px
+   icon, so the visible gap between two icons is the leftover width: 32px - 20px
+   = 12px, three quarters of the theme's 16px. The height is left at 36px so the
+   row keeps a full-size tap target. */
+.profile-links .VPSocialLink {
+  width: 32px;
+}
+
+/* VPSocialLinks centers its icons by default, which suits the nav rail but not
+   a text column */
+.profile-body .VPSocialLinks {
+  justify-content: flex-start;
+}
+
+/* Narrow screens: drop the photo and let the text use the full width */
+@media (max-width: 767px) {
+  .profile-photo {
+    display: none;
+  }
+}
