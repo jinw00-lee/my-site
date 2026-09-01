@@ -13,10 +13,13 @@ const SORTS = [
   { value: 'title', label: 'Title' }
 ]
 
-// Only the keys present on a paper's `links` are rendered, in this order.
+// The set of link kinds a paper can carry. Only the keys present on a record
+// are rendered, and always in this order -- add a kind here and it becomes
+// available to every entry. The key is what publications.ts writes; the value
+// is the label shown in brackets.
 const LINK_LABELS = {
+  paper: 'paper',
   pdf: 'pdf',
-  doi: 'doi',
   code: 'code',
   osf: 'osf materials',
   site: 'project website'
@@ -206,7 +209,7 @@ function tagColor(tag) {
           </div>
 
           <h3 class="pub-title">
-            <a v-if="p.links?.doi || p.links?.pdf" :href="p.links.doi || p.links.pdf" target="_blank" rel="noopener">{{ p.title }}</a>
+            <a v-if="p.links?.paper || p.links?.pdf" class="no-icon" :href="p.links.paper || p.links.pdf" target="_blank" rel="noopener">{{ p.title }}</a>
             <template v-else>{{ p.title }}</template>
           </h3>
 
@@ -224,15 +227,13 @@ function tagColor(tag) {
             <button v-if="p.abstract" type="button" @click="toggleAbstract(p.key)">
               {{ openAbstracts.includes(p.key) ? 'hide abstract' : 'abstract' }}
             </button>
-            <a v-for="l in linkList(p)" :key="l.kind" :href="l.url" target="_blank" rel="noopener">{{ l.label }}</a>
+            <a v-for="l in linkList(p)" :key="l.kind" class="no-icon" :href="l.url" target="_blank" rel="noopener">{{ l.label }}</a>
           </p>
 
           <p v-if="p.abstract && openAbstracts.includes(p.key)" class="pub-abstract">{{ p.abstract }}</p>
         </div>
       </article>
     </section>
-
-    <p class="pub-legend">† corresponding author &nbsp;·&nbsp; * equal contribution</p>
   </div>
 </template>
 
@@ -410,11 +411,15 @@ function tagColor(tag) {
   background-color: var(--vp-c-bg-soft);
 }
 
+/* `contain`, not `cover`: a figure is information, so it is letterboxed inside
+   the fixed box rather than having its edges cut off to fill it. Export art at
+   the box's own 3:2 and the letterboxing disappears -- see the note in
+   publications.ts on `thumb`. */
 .pub-thumb img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .pub-tags {
@@ -433,7 +438,11 @@ function tagColor(tag) {
   color: var(--vp-c-text-1);
 }
 
+/* `font-weight` has to be restated, not left to inheritance: the theme's
+   `.vp-doc a` sets 500 on the anchor itself, which beats the 700 inherited from
+   the heading. Without this, only papers that have no link render bold. */
 .pub-title a {
+  font-weight: inherit;
   color: inherit;
   text-decoration: none;
   transition: color 0.25s;
@@ -472,6 +481,9 @@ function tagColor(tag) {
   cursor: pointer;
 }
 
+/* The brackets are drawn as pseudo-elements so they are not selectable text.
+   Every external anchor also carries `no-icon`: without it the theme turns its
+   `::after` into an 11px masked arrow, which paints over the closing bracket. */
 .pub-links a::before,
 .pub-links button::before {
   content: '[';

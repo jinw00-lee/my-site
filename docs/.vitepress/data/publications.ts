@@ -23,14 +23,26 @@ export interface Publication {
    * Path under docs/public, e.g. '/works/lee2025awe.png'. Omit it and the card
    * draws an empty box of exactly the same size, so the column stays aligned
    * whether or not a paper has a figure yet.
+   *
+   * The slot is 120x80 CSS px (3:2) and the image is fitted with `contain`, so
+   * nothing is ever cropped -- an off-ratio image is letterboxed instead.
+   * Export at 3:2 to fill the slot edge to edge: 360x240 covers 3x displays.
    */
   thumb?: string
   /** Optional. The `abstract` toggle only appears when this is set. */
   abstract?: string
-  /** Only the keys present are rendered, in the order listed here. */
+  /**
+   * Only the keys present are rendered, always in the order listed here.
+   * `paper` is the canonical published version (a DOI link, normally) and, like
+   * `pdf`, also turns the title itself into a link.
+   *
+   * These keys are mirrored by LINK_LABELS in PublicationList.vue, which is
+   * what maps each one to its bracketed label. A key that is not in that map is
+   * silently dropped, so add it there first when introducing a new kind.
+   */
   links?: {
+    paper?: string
     pdf?: string
-    doi?: string
     code?: string
     osf?: string
     site?: string
@@ -45,7 +57,11 @@ export const publications: Publication[] = [
     authors: 'Lee, J.†, Oh, K., Kim, J., & Cha, J.†',
     venue: 'Under review',
     year: 2026,
-    tags: ['affect', 'mental health', 'brain-body interaction', 'naturalistic', 'EEG', 'representation geometry']
+    tags: ['affect', 'mental health', 'brain-body interaction', 'naturalistic', 'EEG', 'representation geometry'],
+    thumb: '/works/lee2026cardiac.png',
+    links: {
+      paper: 'https://doi.org/10.64898/2026.08.11.744232'
+    }
   },
   {
     key: 'pak2026adhd',
@@ -55,7 +71,11 @@ export const publications: Publication[] = [
       'Pak, M., Lee, E., Kim, B., Kim, G., Lee, J., Joo, Y.Y., Posner, J., & Cha, J.†',
     venue: 'Under review',
     year: 2026,
-    tags: ['mental health', 'big data', 'individual difference', 'gene-environment interaction']
+    tags: ['mental health', 'big data', 'individual difference', 'gene-environment interaction'],
+    thumb: '/works/pak2026adhd.png',
+    links: {
+      paper: 'https://doi.org/10.21203/rs.3.rs-7405635/v1'
+    }
   },
   {
     key: 'lee2025awe',
@@ -66,8 +86,10 @@ export const publications: Publication[] = [
     detail: '3(1), 123',
     year: 2025,
     tags: ['affect', 'aesthetics', 'naturalistic', 'EEG', 'representation geometry'],
+    thumb: '/works/lee2025awe.png',
     links: {
-      doi: 'https://doi.org/10.1038/s44271-025-00299-2'
+      paper: 'https://doi.org/10.1038/s44271-025-00299-2',
+      code: 'https://github.com/jinw00-lee/ambivalent-awe'
     }
   },
   {
@@ -79,9 +101,10 @@ export const publications: Publication[] = [
     venue: 'Journal of Child Psychology and Psychiatry',
     detail: '67(5), 788–800',
     year: 2025,
+    thumb: '/works/choi2025adhd.png',
     tags: ['mental health', 'big data', 'individual difference', 'gene-environment interaction'],
     links: {
-      doi: 'https://doi.org/10.1111/jcpp.70074'
+      paper: 'https://doi.org/10.1111/jcpp.70074'
     }
   },
   {
@@ -94,8 +117,9 @@ export const publications: Publication[] = [
       'ACM Multimedia 2025 Cognition-oriented Multimodal Affective and Empathetic Computing',
     year: 2025,
     tags: ['affect', 'memory', 'generative AI', 'EEG', 'aesthetics'],
+    thumb: '/works/kwon2025memory.png',
     links: {
-      doi: 'https://doi.org/10.1145/3746277.3760413'
+      paper: 'https://doi.org/10.1145/3746277.3760413'
     }
   },
   {
@@ -107,8 +131,9 @@ export const publications: Publication[] = [
     detail: '43(2), 801–826',
     year: 2024,
     tags: ['affect', 'aesthetics', 'eye tracking', 'individual difference'],
+    thumb: '/works/lee2024fluency.png',
     links: {
-      doi: 'https://doi.org/10.1177/02762374241288698'
+      paper: 'https://doi.org/10.1177/02762374241288698'
     }
   },
   {
@@ -119,6 +144,10 @@ export const publications: Publication[] = [
     venue: 'medRxiv',
     detail: 'unpublished manuscript',
     year: 2024,
-    tags: ['affect', 'mental health', 'big data', 'individual difference', 'gene-environment interaction']
+    tags: ['affect', 'mental health', 'big data', 'individual difference', 'gene-environment interaction'],
+    thumb: '/works/lee2024covid.png',
+    links: {
+      paper: 'https://doi.org/10.1101/2024.03.04.24303643'
+    }
   }
 ]

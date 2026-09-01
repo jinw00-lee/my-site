@@ -5,9 +5,6 @@
 import PublicationList from './.vitepress/theme/components/PublicationList.vue'
 </script>
 
-# Works
-
-Use the controls to sort or search the list, and click any tag to narrow it.
-Selecting more than one tag shows only the papers carrying all of them.
+The papers are sorted by year based on their first online publication date. Click a title to view the paper; †*corresponding author(s)*; **equal contribution*.
 
 <PublicationList />
