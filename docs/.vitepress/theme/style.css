@@ -64,6 +64,26 @@
 }
 
 /**
+ * Component: Section footer link
+ *
+ * The "All news ->" / "All works ->" line that closes a truncated list on the
+ * About page. Shared by NewsList and ResearchHighlight so both sections end on
+ * the same shape, and it mirrors how the News page's pager closes its list.
+ *
+ * The `.vp-doc` prefix is load-bearing, not decoration: this is a `p`, and the
+ * theme's `.vp-doc p { margin: 16px 0 }` is a class plus a type and so outranks
+ * a bare `.more-link`. Two classes puts it back in front.
+ * -------------------------------------------------------------------------- */
+
+.vp-doc .more-link {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--vp-c-divider);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+/**
  * Component: Profile header
  * -------------------------------------------------------------------------- */
 

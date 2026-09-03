@@ -28,7 +28,10 @@ function isActive(link) {
   return normalize(route.path) === normalize(link)
 }
 
-// Search
+// Search. There is no longer a Search item in the rail, so Cmd/Ctrl-K is the
+// only way in -- the box and its index are still built, just not advertised.
+// Delete this block, the VPLocalSearchBox import and its element in the
+// template, and `search` in config.mts to remove the feature outright.
 const showSearch = ref(false)
 
 function onKeydown(e) {
@@ -52,9 +55,6 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
         <ul>
           <li v-for="item in nav" :key="item.link">
             <a :href="item.link" :class="{ active: isActive(item.link) }">{{ item.text }}</a>
-          </li>
-          <li>
-            <button type="button" @click="showSearch = true">Search</button>
           </li>
         </ul>
       </nav>
@@ -123,25 +123,6 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 
 .rail a.active {
   font-weight: 700;
-}
-
-/* Keep the `nav` part: without it this would also hit the dark mode toggle */
-.rail nav button {
-  display: block;
-  margin: 0;
-  padding: 3px 0;
-  border: 0;
-  background: transparent;
-  font-family: inherit;
-  font-size: 15px;
-  line-height: inherit;
-  color: var(--vp-c-text-1);
-  cursor: pointer;
-  transition: color 0.25s;
-}
-
-.rail nav button:hover {
-  color: var(--vp-c-brand-1);
 }
 
 .rail-icons {

@@ -1,4 +1,10 @@
 <script setup>
+// The two corners at the bottom of this page. Imported here rather than
+// registered globally in theme/index.ts so that the pages which do not show
+// them do not carry the posts and papers in their bundles.
+import NewsList from './.vitepress/theme/components/NewsList.vue'
+import ResearchHighlight from './.vitepress/theme/components/ResearchHighlight.vue'
+
 // VitePress resolves a named social icon against simple-icons, which only
 // carries brand marks -- there is no generic "mail" there. So the envelope is
 // passed in as a literal SVG instead. It is stroked rather than filled, and
@@ -51,4 +57,27 @@ UC San Diego, Department of Psychology
 ### Biography
 I am the 2nd-year PhD student in [UCSD SciMinds](https://www.sciminds.studio) (PI: Dr. Eshin Jolly). I study the **paradoxical nature of human emotion**: its idiosyncrasy and commonality. Specifically, I investigate (1) which and how psychological profiles shape individual differences in emotion-related neural representations and subjective feelings, and (2) how people nevertheless come to share and align emotions. To this end, I am also developing new computational tools. Ultimately, I aim to explore implications of affective science across related fields such as mental health, aesthetics, and social robotics.
 
-I grew up in Incheon, South Korea, and received my B.A. in Psychology and Aesthetics and M.S. in Brain and Cognitive Sciences from Seoul National University. At the [SNU Connectome Lab](http://www.connectomelab.com/en/) (PI: Dr. Jiook Cha), I combined naturalistic neuroimaging with representational geometry and dynamics framework to study the neural basis of complex emotional experiences, including ambivalence ([Lee et al., 2025](https://doi.org/10.1038/s44271-025-00299-2)) and rigid affective updating in depression ([Lee et al., 2026](https://doi.org/10.64898/2026.08.11.744232)).
+I grew up in South Korea, and received my B.A. in Psychology and Aesthetics and M.S. in Brain and Cognitive Sciences from [SNU Connectome Lab](http://www.connectomelab.com/en/) (PI: Dr. Jiook Cha), Seoul National University. 
+
+<!--
+  NEWS
+  The five most recent posts from .vitepress/data/news.ts. Nothing to keep in
+  sync here -- add a post there and it appears in both places.
+-->
+
+### News
+
+<NewsList :limit="5" />
+
+<!--
+  RESEARCH HIGHLIGHT
+  Hand-picked from .vitepress/data/publications.ts by key, shown in the order
+  listed here. Swap a key to feature a different paper; the card itself is
+  built from whatever that entry already says on the Works page.
+-->
+
+### Research Highlight
+
+During my master's studies, I investigated how subjective feelings in daily life intertwine over time and shift across contexts, as well as what these complex dynamics reveal about an individual's traits and resultant emotional experience. To this end, I combined naturalistic neuroimaging with computational approaches (e.g., representational geometry and dynamics, predictive modeling). Stay tuned for my upcoming PhD work!
+
+<ResearchHighlight :keys="['lee2026cardiac', 'lee2025awe']" />

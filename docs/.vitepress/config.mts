@@ -13,6 +13,18 @@ interface ThemeConfig extends DefaultTheme.Config {
 export default defineConfigWithTheme<ThemeConfig>({
   title: "Jinwoo Lee",
   description: "A Personal Website",
+
+  markdown: {
+    // Drop the "#" permalink VitePress hangs off every markdown heading, which
+    // fades in on hover. This removes the element itself rather than hiding it
+    // with CSS, so there is no invisible link left in the tab order.
+    //
+    // The headings keep their `id` -- markdown-it-anchor assigns that
+    // separately -- so /#biography still works as an address, and the local
+    // search still resolves its results to the right heading.
+    anchor: { permalink: false }
+  },
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     siteTitle: false,

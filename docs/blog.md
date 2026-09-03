@@ -1,3 +1,1 @@
-# Blog
-
-(TBD)
+*under construction*

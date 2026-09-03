@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { publications } from '../../data/publications'
+import { authorParts } from '../authors'
 
 // Sorting and filtering all happen in the browser over the full list. That is
 // fine at this size -- a few dozen entries -- and it keeps every control
@@ -110,23 +111,6 @@ function toggleAbstract(key) {
   const i = openAbstracts.value.indexOf(key)
   if (i === -1) openAbstracts.value.push(key)
   else openAbstracts.value.splice(i, 1)
-}
-
-// Split the author string so the site owner's name can be bolded without
-// handing raw HTML to v-html. Trailing daggers and asterisks are part of the
-// match so the marks stay attached to the bolded name.
-function authorParts(authors) {
-  const re = /Lee, J\.[†*]*/g
-  const parts = []
-  let last = 0
-  let m
-  while ((m = re.exec(authors)) !== null) {
-    if (m.index > last) parts.push({ text: authors.slice(last, m.index), me: false })
-    parts.push({ text: m[0], me: true })
-    last = m.index + m[0].length
-  }
-  if (last < authors.length) parts.push({ text: authors.slice(last), me: false })
-  return parts
 }
 
 // Driven by the key order of LINK_LABELS rather than by each record's own key
