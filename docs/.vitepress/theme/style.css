@@ -73,10 +73,22 @@
   gap: 28px;
 }
 
+/* Width and height are both explicit, and the source is cropped to fit rather
+   than letting its own ratio decide the height. That is deliberate: with
+   `height: auto` the two dimensions are locked together, and growing the photo
+   to reach further down the text also narrows the text column, which rewraps
+   the lines and pushes the very target being aimed at further down -- the
+   bottom edge never catches up.
+   Fixing the width breaks that loop. 155px holds the text column at 489px, and
+   at that column width the Research Interest block ends 211px below the top of
+   the photo, which is where the height comes from. `cover` then trims about
+   15px from each side rather than distorting the picture.
+   Both numbers depend on the text above them, so re-measure if it changes. */
 .profile-photo {
   flex: none;
-  width: 200px;
-  height: auto;
+  width: 155px;
+  height: 211px;
+  object-fit: cover;
 }
 
 /* The name has to sit level with the top of the photo, not below it */
