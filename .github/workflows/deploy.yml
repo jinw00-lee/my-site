@@ -46,8 +46,11 @@ jobs:
 
       - run: npm run docs:build
 
-      # VitePress writes here, and docs/public/CNAME is copied to the root of it
-      # -- that file is what keeps the custom domain attached to the site.
+      # VitePress writes here. docs/public/CNAME is copied to the root of it,
+      # but note that is NOT what sets the custom domain: with Pages on the
+      # "GitHub Actions" source, the domain lives in the repo's Pages settings
+      # and the file in the artifact is ignored. It is kept only so the domain
+      # survives if the source is ever switched back to a branch.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist

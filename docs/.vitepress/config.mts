@@ -22,6 +22,12 @@ export default defineConfigWithTheme<ThemeConfig>({
   // Netlify, Vercel and Cloudflare Pages all do.
   cleanUrls: true,
 
+  // `base` is deliberately left at its default '/'. The site is served from the
+  // root of jinwoo-lee.com, so that is correct -- but it also means the same
+  // build looks broken at jinw00-lee.github.io/my-site/, where every asset is
+  // requested from the root and 404s. That is expected, not a bug: do not
+  // "fix" it by setting base to '/my-site/', which would break the real domain.
+
   markdown: {
     // Drop the "#" permalink VitePress hangs off every markdown heading, which
     // fades in on hover. This removes the element itself rather than hiding it
