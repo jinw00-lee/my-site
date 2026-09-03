@@ -12,7 +12,18 @@ interface ThemeConfig extends DefaultTheme.Config {
 // https://vitepress.dev/reference/site-config
 export default defineConfigWithTheme<ThemeConfig>({
   title: "Jinwoo Lee",
-  description: "A Personal Website",
+
+  // This is the <meta name="description">, which is what Google prints under
+  // the title in a search result and what Slack, Bluesky and LinkedIn show when
+  // someone pastes the link. Kept under about 160 characters, since search
+  // engines truncate around there, and led with the name so the snippet still
+  // identifies the person when it is cut short.
+  description:
+    "Jinwoo Lee — doctoral student at UC San Diego studying the paradoxical nature of human emotion through affective and social neuroscience.",
+
+  // Anything added to every page's <head>. `/favicon.png` resolves to
+  // docs/public/favicon.png, which VitePress copies to the root of the build.
+  head: [['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }]],
 
   // Every internal link on this site is written without the extension -- the
   // nav in themeConfig, and the "All news"/"All works" links. Without this the
@@ -59,7 +70,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     // toggle, and the social icons live in the profile block in index.md.
 
     // Bump this by hand whenever the site content actually changes
-    siteUpdated: 'Aug, 2026',
+    siteUpdated: 'Sep, 2026',
 
     search: {
       provider: 'local'
