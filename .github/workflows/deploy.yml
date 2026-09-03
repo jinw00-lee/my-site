@@ -1,0 +1,63 @@
+# Builds the site and publishes it to GitHub Pages on every push to main.
+#
+# This needs Pages to be set to the "GitHub Actions" source in
+# Settings -> Pages. With the older "Deploy from a branch" source there is
+# nowhere for the deploy step below to publish to, and it fails.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  # Lets a deploy be re-run from the Actions tab without inventing a commit
+  workflow_dispatch:
+
+# `pages` and `id-token` are what actions/deploy-pages needs to claim the
+# deployment; `contents: read` is all the build needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. Not `cancel-in-progress`, because killing a half-run
+# deploy can leave the live site mid-update -- a queued run is the safer trade.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # LTS rather than the newest release. The site builds on both, and a
+          # deploy is not where you want to discover a current-branch change.
+          node-version: 22
+          cache: npm
+
+      - uses: actions/configure-pages@v5
+
+      # `ci`, not `install`: it installs exactly what package-lock.json pins and
+      # fails outright if the lockfile and package.json disagree. A deploy can
+      # then never quietly build against different versions than a local run.
+      - run: npm ci
+
+      - run: npm run docs:build
+
+      # VitePress writes here, and docs/public/CNAME is copied to the root of it
+      # -- that file is what keeps the custom domain attached to the site.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

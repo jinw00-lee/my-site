@@ -14,15 +14,28 @@ export default defineConfigWithTheme<ThemeConfig>({
   title: "Jinwoo Lee",
   description: "A Personal Website",
 
+  // Every internal link on this site is written without the extension -- the
+  // nav in themeConfig, and the "All news"/"All works" links. Without this the
+  // router still resolved them on click, but a cold load of jinwoo-lee.com/news
+  // would 404, since the built file is news.html. This tells VitePress the host
+  // resolves an extensionless path to the .html file, which GitHub Pages,
+  // Netlify, Vercel and Cloudflare Pages all do.
+  cleanUrls: true,
+
   markdown: {
     // Drop the "#" permalink VitePress hangs off every markdown heading, which
     // fades in on hover. This removes the element itself rather than hiding it
     // with CSS, so there is no invisible link left in the tab order.
     //
+    // A no-op generator rather than `permalink: false`: false does work at
+    // runtime, but markdown-it-anchor's types declare this field as a generator
+    // function, so it fails the type check. A function that renders nothing is
+    // the same result and stays typed.
+    //
     // The headings keep their `id` -- markdown-it-anchor assigns that
     // separately -- so /#biography still works as an address, and the local
     // search still resolves its results to the right heading.
-    anchor: { permalink: false }
+    anchor: { permalink: () => {} }
   },
 
   themeConfig: {
