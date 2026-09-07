@@ -159,6 +159,32 @@
   justify-content: flex-start;
 }
 
+/* The envelope sits outside <SocialLinks> -- see the note beside it in
+   index.md -- so it does not inherit VPSocialLink's own styles: those are
+   scoped to that component and do not reach markup written elsewhere. These
+   rules restate them, at the same 32x36 box as the icons beside it so the row
+   stays even. No `fill` is set: this icon is drawn with strokes, and filling it
+   would turn the envelope into a solid block. */
+.profile-links .mail-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 36px;
+  color: var(--vp-c-text-2);
+  transition: color 0.5s;
+}
+
+.profile-links .mail-link:hover {
+  color: var(--vp-c-text-1);
+  transition: color 0.25s;
+}
+
+.profile-links .mail-link svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* Narrow screens: drop the photo and let the text use the full width */
 @media (max-width: 767px) {
   .profile-photo {
