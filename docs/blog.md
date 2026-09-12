@@ -1,4 +1,4 @@
-I try to write about ideas at the intersection of psychology, neuroscience, AI, and philosophy, trying to **seek scientific imagination with critical understanding**. I do not use AI to generate ideas or write these pieces. I only use AI to help improve my English expression.
+I try to write about ideas at the intersection of psychology, neuroscience, AI, and philosophy, trying to **seek scientific imagination with critical understanding**. I do not use AI to generate ideas here.
 
 ---
 
