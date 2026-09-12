@@ -3,6 +3,7 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import VPSocialLinks from 'vitepress/dist/client/theme-default/components/VPSocialLinks.vue'
 import Layout from './Layout.vue'
+import XPost from './components/XPost.vue'
 import './style.css'
 
 declare global {
@@ -19,25 +20,11 @@ export default {
     // Makes <SocialLinks> usable inside any .md file, not just in Layout.vue
     app.component('SocialLinks', VPSocialLinks)
 
-    /**
-     * Page views for GoatCounter, whose script is loaded in config.mts.
-     *
-     * This site is a single-page app: after the first load, moving between
-     * About and News swaps the content without a page load. An analytics
-     * script left to itself would therefore only ever see whichever page the
-     * visitor landed on, and every click after that would be invisible.
-     *
-     * The wrinkle is that VitePress calls `router.go()` once when it mounts,
-     * so this hook fires for the landing page too -- and count.js has already
-     * counted that one by itself on load. Hence `first`: the opening call is
-     * skipped, and everything after it is a real navigation.
-     *
-     * Skipping rather than turning count.js's own on-load counting off is
-     * deliberate. Disabling it would mean counting the landing page from here
-     * instead, which races the async <script> tag: if it has not finished
-     * loading when this fires, that view is simply lost. Letting count.js
-     * count on its own load has no such race.
-     */
+    // Lets a post embed an X (Twitter) post with one line:
+    // <XPost url="https://x.com/..." />. Registered globally so posts need no
+    // import of their own. X's script loads only on pages that use it.
+    app.component('XPost', XPost)
+
     if (import.meta.env.PROD) {
       let first = true
       const previous = router.onAfterRouteChange

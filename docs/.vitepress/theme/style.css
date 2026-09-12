@@ -84,6 +84,134 @@
 }
 
 /**
+ * Component: Blog post body
+ *
+ * The prose of a post is rendered markdown slotted into BlogPost.vue. Slotted
+ * content carries the parent's scope id, not BlogPost's, so the component's own
+ * scoped styles cannot reach it and the rules live here instead.
+ * -------------------------------------------------------------------------- */
+
+/* Section headings one step below the 24px post title, at the same 20px as the
+   section headings on the About page. Left at the theme's 24px, every `##` in a
+   post would be as loud as the title above it. */
+.vp-doc .post-body h2 {
+  margin: 36px 0 0;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+}
+
+.vp-doc .post-body h3 {
+  margin: 28px 0 0;
+  font-size: 17px;
+  line-height: 26px;
+}
+
+/* The reference list at the end of a post, written in markdown as a
+   `## References` heading followed by one paragraph per entry. Styled like an
+   APA reference list: smaller text and a hanging indent, so the first author
+   of each entry stands out when scanning down the list.
+
+   Keyed to the id VitePress generates from the heading text, so the markdown
+   needs nothing beyond the heading itself. `#reference` covers the singular
+   spelling. The list has to be the last section of the post: every paragraph
+   after the heading is treated as an entry. */
+.vp-doc .post-body :is(#references, #reference) ~ p {
+  margin: 10px 0 0;
+  padding-left: 2em;
+  text-indent: -2em;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--vp-c-text-2);
+  /* Lets a long DOI or URL break instead of widening the page on a phone */
+  overflow-wrap: anywhere;
+}
+
+.vp-doc .post-body :is(#references, #reference) + p {
+  margin-top: 14px;
+}
+
+/* A DOI or URL moves to the next line whole, instead of splitting at its last
+   hyphen and leaving one character behind. `inline-block` makes the link a
+   single unit for line breaking, and `max-width` still lets a link longer than
+   the column wrap inside itself. `text-indent` is reset because an inline block
+   would otherwise inherit the entry's negative hanging indent. */
+.vp-doc .post-body :is(#references, #reference) ~ p a {
+  display: inline-block;
+  max-width: 100%;
+  text-indent: 0;
+}
+
+/**
+ * Component: Math
+ *
+ * TeX in markdown, enabled by `math: true` in config.mts. The theme's own
+ * base.css already lets a display equation scroll sideways when it is wider
+ * than the column, so only the line-breaking fix below is needed here.
+ * -------------------------------------------------------------------------- */
+
+/* Inline math plus the punctuation touching it, wrapped by mathNoBreak() in
+   config.mts, so a comma never starts a line on its own */
+.math-nobreak {
+  white-space: nowrap;
+}
+
+/**
+ * Component: Footnotes
+ *
+ * Output of markdown-it-footnote, enabled in config.mts. The default theme has
+ * no styles for it, so without these the notes render as full-size body text.
+ * Not scoped to posts: a footnote on any page should look the same.
+ * -------------------------------------------------------------------------- */
+
+/* The `[1]` marker in the text. `line-height: 0` keeps the raised text from
+   pushing its line further apart than its neighbours. */
+.vp-doc .footnote-ref {
+  line-height: 0;
+}
+
+.vp-doc .footnote-ref a {
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.vp-doc .footnote-ref a:hover {
+  text-decoration: underline;
+}
+
+.vp-doc .footnotes-sep {
+  margin: 40px 0 0;
+}
+
+.vp-doc .footnotes {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc .footnotes-list {
+  margin: 14px 0 0;
+}
+
+/* Outranks `.vp-doc li + li`, which spaces body lists 8px apart */
+.vp-doc .footnotes-list li + li {
+  margin-top: 6px;
+}
+
+/* Outranks `.vp-doc p` above, which would give each note 16px margins and a
+   26px line height */
+.vp-doc .footnotes p {
+  margin: 0;
+  line-height: 20px;
+}
+
+/* The return arrow at the end of each note */
+.vp-doc .footnote-backref {
+  margin-left: 2px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+/**
  * Component: Profile header
  * -------------------------------------------------------------------------- */
 

@@ -14,6 +14,10 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@types/markdown-it-footnote": "^3.0.4",
+    "@types/node": "^22.20.2",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-mathjax3": "^4.3.2",
     "vitepress": "^1.6.4"
   }
 }

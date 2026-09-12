@@ -1,1 +1,11 @@
-*under construction*
+I occasionally write about ideas at the intersection of psychology, neuroscience, AI, and philosophy, trying to **seek scientific imagination with critical understanding**. I do not use AI to generate ideas or write these pieces. I only use AI to help improve my English expression.
+
+---
+
+<script setup>
+// The list is built from the files in docs/posts/, so there is nothing to keep
+// in sync here: add a post there and it appears on this page.
+import BlogList from './.vitepress/theme/components/BlogList.vue'
+</script>
+
+<BlogList />

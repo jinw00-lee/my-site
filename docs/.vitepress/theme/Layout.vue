@@ -3,6 +3,8 @@ import { computed, defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue
 import { useData, useRoute } from 'vitepress'
 import VPSocialLinks from 'vitepress/dist/client/theme-default/components/VPSocialLinks.vue'
 import VPSwitchAppearance from 'vitepress/dist/client/theme-default/components/VPSwitchAppearance.vue'
+import BlogPost from './components/BlogPost.vue'
+import { BLOG_PAGE, isPostFile } from './posts'
 
 // The search box ships its own engine (minisearch) and highlighter (mark.js),
 // so load it lazily the first time the user actually opens it.
@@ -24,7 +26,12 @@ function normalize(path) {
   return p.length > 1 ? p.replace(/\/$/, '') : p
 }
 
+// A page whose source lives in docs/posts/ gets the post header and footer
+const isPost = computed(() => isPostFile(page.value.relativePath))
+
 function isActive(link) {
+  // A post has no nav entry of its own; it belongs to the Blog section
+  if (isPost.value) return normalize(link) === BLOG_PAGE
   return normalize(route.path) === normalize(link)
 }
 
@@ -74,6 +81,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
           <h2>Page not found</h2>
           <p>That address does not exist. <a href="/">Back to About</a></p>
         </template>
+        <BlogPost v-else-if="isPost"><Content /></BlogPost>
         <Content v-else />
       </div>
     </main>
