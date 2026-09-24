@@ -50,7 +50,7 @@ export const news: NewsItem[] = [
   {
     key: '2026-HumanLabTalk',
     date: '2026-07-01',
-    title: 'Invited for a Research Talk in SKKU Human Affective Neuroscience Lab',
+    title: 'Invited for a Research Talk in SKKU Human Lab (PI: Dr. Justin Minue Kim)',
     tags: ['talk'],
     body: `I gave a research talk at Sungkyunkwan University’s [Human Affective Neuroscience Lab (PI: Dr. Justin Minue Kim)](https://www.affectiveneurosciencelab.com/). 
       I presented my first PhD project, **Differentiable Intersample Modeling (DIM)**, discussing how it complements the Anna Karenina (AnnaK) framework 
