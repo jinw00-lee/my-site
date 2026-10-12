@@ -47,6 +47,16 @@ export interface NewsItem {
 }
 
 export const news: NewsItem[] = [
+    {
+    key: '2026-SCRAPLabTalk',
+    date: '2026-10-01',
+    title: 'Invited for a Research Talk in Dartmouth SCRAP Lab (PI: Dr. Mark Thornton)',
+    tags: ['talk'],
+    body: `I gave a research talk at Dartmouth College’s [Social Computation, Representation, and Prediction Lab (SCRAP Lab; PI: Dr. Mark Thornton)](https://scraplab.org/). 
+      I introduced my first PhD project, **Differentiable Inter-sample Modeling (DIM)**, and discussed how it enables new research questions 
+      beyond conventional Representational Similarity Analysis (RSA). In particular, I explored how neural representations of facial expressions 
+      in ambiguous social contexts vary in similarity depending on perceiver characteristics and the perceptual features of the facial expression images.`
+  },
   {
     key: '2026-HumanLabTalk',
     date: '2026-07-01',
