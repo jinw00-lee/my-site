@@ -48,6 +48,15 @@ export interface NewsItem {
 
 export const news: NewsItem[] = [
     {
+    key: '2026-UniReps',
+    date: '2026-12-01',
+    title: 'Presented Differentiable Intersample Modeling (DIM) at *NeurIPS* Workshop *UniReps*',
+    tags: ['conference', 'talk'],
+    body: `I’ll be presenting **Differentiable Inter-sample Modeling (DIM)** at [Unifying Representations in Neural Models (UniReps)](https://unireps.org/2026/), a *NeurIPS* workshop at Paris!
+      While at SANS2026 we introduced DIM’s prototype architecture and its potential applications to neuroimaging data, this time we present the fully developed architecture and rigorous simulations 
+      evaluating its learning stability, parameter and model recovery, and identifiability. Preprint coming soon!`
+  },
+  {
     key: '2026-SCRAPLabTalk',
     date: '2026-10-01',
     title: 'Invited for a Research Talk in Dartmouth SCRAP Lab (PI: Dr. Mark Thornton)',

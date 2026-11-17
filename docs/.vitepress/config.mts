@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { defineConfigWithTheme } from 'vitepress'
@@ -75,6 +76,34 @@ function mathNoBreak(md: MarkdownRenderer) {
   })
 }
 
+/**
+ * The "last update" line in the side rail, e.g. "Oct, 2026".
+ *
+ * Taken from the date of the latest commit, so it moves on its own whenever
+ * anything is pushed. The month is read in the commit's own timezone (git's
+ * default for --date=format), not the build machine's, so a late-evening
+ * commit on the last of the month is not pushed into the next month by a
+ * build server running on UTC. If git is unavailable the build date is used.
+ */
+function siteUpdatedLabel(): string {
+  let year: number
+  let month: number
+  try {
+    const out = execSync('git log -1 --format=%cd --date=format:%Y-%m', {
+      encoding: 'utf-8',
+      stdio: ['ignore', 'pipe', 'ignore']
+    }).trim()
+    ;[year, month] = out.split('-').map(Number)
+    if (!year || !month) throw new Error(`unexpected git date: ${out}`)
+  } catch {
+    const now = new Date()
+    year = now.getFullYear()
+    month = now.getMonth() + 1
+  }
+  const name = new Date(year, month - 1, 1).toLocaleString('en-US', { month: 'short' })
+  return `${name}, ${year}`
+}
+
 interface ThemeConfig extends DefaultTheme.Config {
   siteUpdated?: string
 }
@@ -148,7 +177,7 @@ export default defineConfigWithTheme<ThemeConfig>({
       { text: 'Blog',  link: '/blog' }
     ],
 
-    siteUpdated: 'Sep, 2026',
+    siteUpdated: siteUpdatedLabel(),
 
     search: {
       provider: 'local'
